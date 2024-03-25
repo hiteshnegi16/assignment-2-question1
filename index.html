@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style>
+    
+    h1{
+        text-align: center;
+    }
+    body {
+      background-image: url('https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; 
+      margin: 0;
+      padding: 0;
+    }
+    #container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8); 
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-top: 30px;
+      text-align: center;
+      color: #333;
+    }
+    .ui-widget-header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .ui-widget-content {
+      background-color: #f7f7f7;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .ui-state-highlight {
+      background-color: #28a745 !important;
+      color: #fff;
+    }
+    #selectable li.ui-selected {
+      background-color: #28a745;
+    }
+    #selectable li {
+      margin: 5px;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    #accordion h3 {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    #accordion .ui-accordion-content {
+      padding: 20px;
+      background-color: #f7f7f7;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+    }
+    #slider {
+      margin-top: 10px;
+      width: 90%;
+    }
+    .ui-autocomplete {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 5px;
+    }
+    #toggleBox {
+      display: none; 
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  
+    #draggable {
+      width: 80px; 
+      height: 80px; 
+    }
+    #droppable {
+      width: 130px; 
+      height: 130px; 
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+
+  <h1>Assignment 2<br>Question 1</h1>
+
+  <div class="ui-widget-content" id="draggable">
+    <p>you can drag thsi box</p>
+  </div>
+
+  <div class="ui-widget-header" id="droppable">
+    <p>you will see effects if you place the box it</p>
+  </div>
+
+  <div class="ui-widget-content" id="resizable">
+    <p>you can resize this box</p>
+  </div>
+
+  <ul id="selectable">
+    <li>hiii!</li>
+    <li>hello!</li>
+    <li>Hola!</li>
+  </ul>
+
+  <h2>Widgets</h2>
+
+  <div id="accordion">
+    <h3>Section 1</h3>
+    <div>
+      <p>this is for my Assignment</p>
+    </div>
+    <h3>Section 2</h3>
+    <div>
+      <p>this is for my Assignment</p>
+    </div>
+  </div>
+
+  <input type="text" id="autocomplete" placeholder="Autocomplete">
+
+  <input type="text" id="datepicker" placeholder="Date Picker">
+  <h2>you can use slider to increase/decrease the brightness</h2>
+
+  <div id="slider"></div>
+
+  <h2>Effects</h2>
+
+  <div class="ui-widget-content" id="explode">
+  box will explode when you click it
+  </div>
+
+  <div class="ui-widget-content" id="fadeInOut">
+    shows fade in/out effects
+  </div>
+
+  <div class="ui-widget-content" id="colorAnimation">
+    you can see color animation if you click it 
+  </div>
+
+  <button id="toggleButton">Show/Hide</button>
+  <div id="toggleBox">
+    this button helps us to show or hide content
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+  $(function() {
+    $("#draggable").draggable();
+    $("#droppable").droppable({
+      drop: function(event, ui) {
+        $(this).addClass("ui-state-highlight").find("p").html("Dropped!");
+      }
+    });
+    $("#datepicker").datepicker();
+    $("#slider").slider();
+    $("#showHide").click(function() {
+      $("#draggable").toggle("explode");
+      $("#toggleBox").hide(); 
+    });
+    $("#resizable").resizable();
+    $("#selectable").selectable();
+    $("#accordion").accordion();
+    $("#autocomplete").autocomplete({
+      source: ["Hitesh", "Negi", "Insturctor", "Monisa", "Sanna"]
+    });
+  
+    $("#fadeInOut").click(function() {
+      $(this).fadeToggle();
+    });
+    $("#explode").click(function() {
+      $(this).effect("explode");
+    });
+    
+    $("#colorAnimation").click(function() {
+      $(this).animate({
+        backgroundColor: "#00ff00"
+      }, 1000);
+    });
+    $("#slider").slider({
+      min: 30,
+      max: 100,
+      value: 100,
+      slide: function(event, ui) {
+        $("body").css("filter", "brightness(" + (ui.value / 100) + ")");
+      }
+    });
+    $("#toggleButton").click(function() {
+      $("#toggleBox").toggle(); 
+    });
+    
+  });
+</script>
+
+</body>
+</html>
+
